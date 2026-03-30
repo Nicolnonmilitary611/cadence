@@ -224,3 +224,7 @@ It automatically falls back to main agent execution. Subagent failure should not
 ## License
 
 MIT License - see LICENSE file for details.
+
+---
+
+Thanks to [LinuxDo](https://linux.do/)
