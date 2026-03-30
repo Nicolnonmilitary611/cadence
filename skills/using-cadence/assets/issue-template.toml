@@ -1,0 +1,88 @@
+# Cadence issue schema
+# - This file is the shared source for issue file field structure, default values, and annotation examples.
+# - Lifecycle, confirmation points, handoff, and terminal states are governed by `references/cadence-lifecycle.md`.
+# - `cadence_validate.py` provides mechanical guardrails: basic structure and execution-stage writeback boundary validation; semantic validation is the responsibility of phase skills, reviewers, and the main agent.
+# - When writing actual issue files, replace all placeholder values; do not retain empty strings or placeholder text.
+# - One plan file corresponds to one issue file, with a path like `issues/YYYY-MM-DD-feature-name.toml`.
+# - The file must be directly parseable as valid TOML.
+
+# Relative path to the corresponding plan file. Required and non-empty.
+plan = "plan/YYYY-MM-DD-feature-name.md"
+
+# Each `[[issue]]` block represents an independently deliverable, independently verifiable, independently writable outcome unit.
+# Add more `[[issue]]` blocks as needed; default execution order is determined by `sequence`, and file ordering is for reading display only.
+[[issue]]
+
+# Unique identifier. Prefer reusing existing repository conventions; when no existing issues exist, use `a1`, `a2`, ...
+id = "a1"
+
+# Default execution order. Required positive integer, unique within the same file.
+# Only determines default precedence when issues have met dependencies and are all executable; does not replace `depends_on`.
+sequence = 10
+
+# Short title. Required and non-empty.
+title = "<issue title>"
+
+# Boundary description. Required and non-empty.
+# Clearly state what to do and what not to do; prefer multi-line basic strings for long text.
+scope = """
+<scope: what this issue does and does not do>
+"""
+
+# Impact surface. Required array.
+# Allowed value forms:
+# - "none"
+# - "external"
+# - "module:<name>"
+# - "api:<name>"
+# - "command:<name>"
+# - "schema:<name>"
+# - Locatable paths or globs
+touch_points = ["none"]
+
+# Hard dependency issue id list.
+# Write an empty array `[]` when there are no dependencies; do not write the string `"none"`.
+depends_on = []
+
+# Definition of done. Required and non-empty.
+# State outcomes, not vague processes.
+done_when = "<verifiable completion condition>"
+
+# Primary validation entry point. Required and non-empty.
+# By default write project test commands; if the repository lacks a vehicle, degrade per shared validation rules.
+validate_by = "<primary validation command or reproducible validation path>"
+
+# Regression that needs to be re-run. Write `"none"` when there is no regression.
+regress_by = "none"
+
+# Regression execution timing. Allowed values:
+# - "after_done": Default; wait until all issues' `status` is `done` before running regressions
+# - "before_fanout": Once the current issue passes `validate_by`, complete regression before unlocking large batches of downstream dependencies
+regress_timing = "after_done"
+
+# Development status. Allowed values:
+# - "todo"
+# - "in_progress"
+# - "done"
+# - "blocked"
+status = "todo"
+
+# Primary validation status. Allowed values:
+# - "not_run"
+# - "in_progress"
+# - "passed"
+# - "failed"
+validate_status = "not_run"
+
+# Regression status. Allowed values:
+# - "not_needed"
+# - "not_run"
+# - "in_progress"
+# - "passed"
+# - "failed"
+# When `regress_by = "none"`, write `"not_needed"`; otherwise initialize as `"not_run"`.
+regress_status = "not_needed"
+
+# Supplementary notes. Write `"none"` when there is no additional information.
+# If the issue is blocked, record the blocking reason and resolution conditions here.
+notes = "none"

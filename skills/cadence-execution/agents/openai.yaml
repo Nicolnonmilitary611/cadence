@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cadence Execution"
+  short_description: "Cadence execution phase: advance issue implementation, review, validation, and status writeback"
+  default_prompt: "Use cadence-execution to enter Cadence from the Execution phase, advancing based on existing issue files; if the target is unclear, ask the user to specify. Each issue must pass spec-reviewer and code-reviewer before entering final validate_by; only skip when the user explicitly exempts."

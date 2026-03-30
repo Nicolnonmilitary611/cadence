@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cadence Entry"
+  short_description: "Cadence unified entry: always starts from Planning; mid-process continuation requires user to explicitly specify phase"
+  default_prompt: "Use using-cadence to enter Cadence from the Planning phase; to continue from mid-process, the user explicitly selects the corresponding phase."
