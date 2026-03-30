@@ -169,8 +169,8 @@ git clone https://github.com/YukiKazahana/cadence.git
 
 ```
 # Global install (choose the directory for your agent)
-cp -r cadence-zh/skills/ ~/.codex/skills/       # Codex
-cp -r cadence-zh/skills/ ~/.claude/skills/      # Claude Code
+cp -r cadence/skills/ ~/.codex/skills/       # Codex
+cp -r cadence/skills/ ~/.claude/skills/      # Claude Code
 ```
 
 #### Windows PowerShell
