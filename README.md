@@ -177,8 +177,8 @@ cp -r cadence/skills/ ~/.claude/skills/      # Claude Code
 
 ```
 # Global install (choose the directory for your agent)
-Copy-Item -Recurse -Path .\cadence-zh\skills\* -Destination $HOME\.codex\skills\       # Codex
-Copy-Item -Recurse -Path .\cadence-zh\skills\* -Destination $HOME\.claude\skills\     # Claude Code
+Copy-Item -Recurse -Path .\cadence\skills\* -Destination $HOME\.codex\skills\       # Codex
+Copy-Item -Recurse -Path .\cadence\skills\* -Destination $HOME\.claude\skills\     # Claude Code
 ```
 
 ### Usage
