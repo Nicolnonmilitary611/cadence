@@ -118,25 +118,25 @@ Advance implementation, validation, and state writeback based on issue files.
 Cadence's harness is not a single layer, but a layered design from structure to semantics:
 
 ```
-┌──────────────────────────────────────────────┐
-│  Semantic Layer (reviewer subagents)         │
+┌───────────────────────────────────────────────┐
+│  Semantic Layer (reviewer subagents)          │
 │  Is the plan complete? Are issues well-split? │
 │  Is the code defect-free?                     │
-├──────────────────────────────────────────────┤
+├───────────────────────────────────────────────┤
 │  Process Layer (three-phase pipeline +        │
 │  confirmation points)                         │
 │  Phase boundaries, handoff rules, state       │
 │  machine advancement                          │
-├──────────────────────────────────────────────┤
+├───────────────────────────────────────────────┤
 │  Structural Layer (mechanical guardrails)     │
 │  TOML validation, field constraints,          │
 │  writeback boundary checks                    │
-├──────────────────────────────────────────────┤
+├───────────────────────────────────────────────┤
 │  Environment Layer (file system + skill       │
 │  format)                                      │
 │  plan/*.md, issues/*.toml, SKILL.md,          │
 │  templates                                    │
-└──────────────────────────────────────────────┘
+└───────────────────────────────────────────────┘
 ```
 
 **Environment Layer** is the most fundamental primitive: agents read and write files, files serve as state carriers, independent of context windows or conversation history.
