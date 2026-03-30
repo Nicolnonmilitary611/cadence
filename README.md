@@ -1,5 +1,13 @@
 # Cadence
 
+<div align="center">
+
+[English](README.md) | [简体中文](README.zh-CN.md)
+
+</div>
+
+---
+
 **Plan-driven phased execution flow — a lightweight, stable, universal agent harness.**
 
 Usable with Codex, Claude Code, and other AI agents.
