@@ -1,11 +1,11 @@
 ---
 name: cadence-planning
-description: Cadence's planning phase. Drafts and confirms `plan/*.md` for the current task; entering this phase when directly requested by the user is also considered entering Cadence, and after the current flow is confirmed, it defaults to transitioning to `cadence-issue-generation`.
+description: Cadence's planning phase. Drafts and confirms `.cadence/plan/*.md` for the current task; entering this phase when directly requested by the user is also considered entering Cadence, and after the current flow is confirmed, it defaults to transitioning to `cadence-issue-generation`.
 ---
 
 # Cadence Planning
 
-Draft `Cadence Planning` for the repository and save it to the current project's `plan/` directory tree.
+Draft `Cadence Planning` for the repository and save it to the current project's `.cadence/plan/` directory tree.
 
 ## Lifecycle Binding
 
@@ -19,7 +19,7 @@ Draft `Cadence Planning` for the repository and save it to the current project's
 ## Shared Source of Truth
 
 1. Lifecycle, confirmation points, default handoff, and terminal states are governed by `../using-cadence/references/cadence-lifecycle.md`.
-2. `plan/*.md` structural requirements are governed by `assets/plan-template.md`.
+2. `.cadence/plan/*.md` structural requirements are governed by `assets/plan-template.md`.
 3. This document describes the `Planning` phase's drafting, review, self-check, and confirmation point handling rules.
 4. Semantic validation for the planning phase is the responsibility of the main agent and `plan-reviewer`.
 5. The shared `available capabilities` gate for the entire flow is governed by `../using-cadence/references/cadence-lifecycle.md`; this document only supplements `Planning` phase writeback and reviewer output requirements.
@@ -27,8 +27,8 @@ Draft `Cadence Planning` for the repository and save it to the current project's
 
 ## File and Naming Conventions
 
-1. Plan files are only written to the current local repository's `plan/` directory tree, not to global directories.
-2. Plan file paths use `plan/YYYY-MM-DD-<feature-name>.md`, using the current local date.
+1. Plan files are only written to the current local repository's `.cadence/plan/` directory tree, not to global directories.
+2. Plan file paths use `.cadence/plan/YYYY-MM-DD-<feature-name>.md`, using the current local date.
 3. `feature-name` is deterministically generated from the task title using the following rules: only keep lowercase letters, digits, and hyphens; unsafe or non-stably-transcribable characters are uniformly replaced with hyphens; consecutive hyphens are collapsed to one; leading and trailing hyphens are removed; maximum length is capped at 48 characters.
 4. If the normalized `feature-name` is empty, use `task-<8-char-hash>` as a fallback name, where `hash` is stably generated from the original task title.
 5. If the default target path already exists and the user has not explicitly requested reusing that file, append `-2`, `-3`, etc. as incrementing suffixes to the filename until an unoccupied path is obtained.
@@ -42,24 +42,24 @@ Draft `Cadence Planning` for the repository and save it to the current project's
 1. Prerequisite check: First read confirmable code, documentation, and context within the repository, and complete a current session `available capabilities` adaptation check per the shared lifecycle; restate currently confirmed task facts in chat; only ask the user when information cannot be confirmed within the repository and would affect plan boundaries or strategy.
 2. Clarify gaps: If key information gaps still exist after entering the planning phase, at most 3 mutually independent and necessary questions can be asked in the same round; questions should focus on information outside the repository that would affect plan boundaries or strategy.
 3. Phase boundaries: The planning phase focuses on plan files and fact clarification, not code editing.
-4. Write draft: After determining the target `plan/*.md` path, first draft the `Cadence Planning` initial draft using `assets/plan-template.md` and write it directly to the target `plan/*.md`; before `plan-reviewer` passes, the current content at that path is only treated as the current phase draft, not as a confirmed plan.
-5. Reviewer review: Dispatch the `plan-reviewer` subagent to directly review the current `plan/*.md` draft; if review does not pass, the main agent modifies the same plan file per `plan-reviewer` rules below, re-reviews, or clarifies with the user.
-6. Final self-check: After review passes, the main agent reads back the current `plan/*.md` to complete the final writeback self-check, confirming path, content, placeholder cleanup, and format state are all correct.
+4. Write draft: After determining the target `.cadence/plan/*.md` path, first draft the `Cadence Planning` initial draft using `assets/plan-template.md` and write it directly to the target `.cadence/plan/*.md`; before `plan-reviewer` passes, the current content at that path is only treated as the current phase draft, not as a confirmed plan.
+5. Reviewer review: Dispatch the `plan-reviewer` subagent to directly review the current `.cadence/plan/*.md` draft; if review does not pass, the main agent modifies the same plan file per `plan-reviewer` rules below, re-reviews, or clarifies with the user.
+6. Final self-check: After review passes, the main agent reads back the current `.cadence/plan/*.md` to complete the final writeback self-check, confirming path, content, placeholder cleanup, and format state are all correct.
 7. Confirmation point: After the current plan file passes review and completes self-check, present the plan file path, plan summary, and review results to the user, and explicitly ask: `Reply confirm to enter cadence-issue-generation.`
 8. In-confirmation-point feedback: Entering `cadence-issue-generation` uses the user's explicit confirmation as the sole trigger; general discussion, supplementary requirements, continued analysis, or other non-confirmation responses continue to be handled within the current confirmation point.
 9. Automatic handoff: After confirmation, automatically transition to `cadence-issue-generation` based on the current plan file.
 
 ## plan-reviewer
 
-- `plan-reviewer` executes after the current plan draft is written to the target `plan/*.md`, responsible for reviewing the current plan draft per the review rules below, and checking whether the target path and current file content match.
+- `plan-reviewer` executes after the current plan draft is written to the target `.cadence/plan/*.md`, responsible for reviewing the current plan draft per the review rules below, and checking whether the target path and current file content match.
 - `plan-reviewer` uniformly handles content review, structural checks, target path checks, and plan file content validation for the Planning phase; do not additionally split other reviewer processes, and do not add duplicate self-check chains in parallel.
-- `plan-reviewer` is read-only by default; it does not directly write to `plan/*.md`, nor does it confirm the plan on behalf of the main agent.
+- `plan-reviewer` is read-only by default; it does not directly write to `.cadence/plan/*.md`, nor does it confirm the plan on behalf of the main agent.
 - The main agent provides `plan-reviewer` with minimum necessary context: currently confirmed task facts, plan target path, current plan full text, `assets/plan-template.md` structural requirements, and the review rules below.
-- `plan-reviewer` does not read back through the entire conversation history; it only performs independent review based on context provided by the main agent and the current `plan/*.md`.
+- `plan-reviewer` does not read back through the entire conversation history; it only performs independent review based on context provided by the main agent and the current `.cadence/plan/*.md`.
 - `plan-reviewer` also follows the shared lifecycle's current session `available capabilities` gate before reviewing; if the conclusion is `none-applicable`, the reason must be explicitly stated in the output.
-- `plan-reviewer` is also responsible for target path checks and plan file content validation, including: target path conforms to `plan/*.md` naming conventions, current file content is consistent with template structure, current file content is consistent with the task corresponding to the target path, no placeholder residue, no obvious format corruption.
+- `plan-reviewer` is also responsible for target path checks and plan file content validation, including: target path conforms to `.cadence/plan/*.md` naming conventions, current file content is consistent with template structure, current file content is consistent with the task corresponding to the target path, no placeholder residue, no obvious format corruption.
 - Each blocking issue in `FINDINGS` must have a label: `[auto_fixable]` means the main agent can fix it directly without introducing unconfirmed information, changing key scope, or making key strategy decisions on behalf of the user; `[needs_user_decision]` means the user must be consulted first.
-- If `plan-reviewer` raises issues, the main agent by default only auto-revises the current `plan/*.md` based on `[auto_fixable]` `FINDINGS`, then re-initiates the same type of review; auto-revision executes at most 3 rounds.
+- If `plan-reviewer` raises issues, the main agent by default only auto-revises the current `.cadence/plan/*.md` based on `[auto_fixable]` `FINDINGS`, then re-initiates the same type of review; auto-revision executes at most 3 rounds.
 - If any `[needs_user_decision]` issue appears, or the auto-revision limit is reached without passing, the main agent must stop auto-revision and clarify with the user.
 
 ### Review Rules
@@ -83,7 +83,7 @@ Task facts:
 - <confirmed facts>
 
 Plan target path:
-- <plan/...>
+- <.cadence/plan/...>
 
 Plan content:
 <current plan full text, or explicit instruction to read the target plan file directly>
@@ -98,7 +98,7 @@ Review requirements:
 - Each blocking issue must be labeled as `[auto_fixable]` or `[needs_user_decision]`
 
 Check focus:
-- Whether the plan target path has correctly landed at `plan/*.md`, and whether naming conforms to conventions
+- Whether the plan target path has correctly landed at `.cadence/plan/*.md`, and whether naming conforms to conventions
 - Whether current plan file content is consistent with the task corresponding to the target path
 - Whether there is unconfirmed information, guessing, or fabrication
 - Whether there are `TODO`, `TBD`, placeholders, unfinished sections, unfounded jumps, or missing steps

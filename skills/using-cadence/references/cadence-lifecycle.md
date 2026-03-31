@@ -16,8 +16,8 @@ This file is the shared lifecycle constraints for `Cadence`. `using-cadence` and
 ## Shared Source of Truth
 
 1. Lifecycle, phase prerequisites, confirmation points, default handoff, and terminal states are governed by this file.
-2. `plan/*.md` structural requirements are governed by `../../cadence-planning/assets/plan-template.md`; `cadence-planning` supplements the planning phase process and reviewer rules.
-3. `issues/*.toml` field structure, default values, and annotation examples are governed by `../assets/issue-template.toml`; `cadence-issue-generation` and `cadence-execution` supplement each phase's generation, review, writeback, and advancement rules.
+2. `.cadence/plan/*.md` structural requirements are governed by `../../cadence-planning/assets/plan-template.md`; `cadence-planning` supplements the planning phase process and reviewer rules.
+3. `.cadence/issue/*.toml` field structure, default values, and annotation examples are governed by `../assets/issue-template.toml`; `cadence-issue-generation` and `cadence-execution` supplement each phase's generation, review, writeback, and advancement rules.
 4. `scripts/cadence_validate.py` provides basic structure and execution-stage writeback boundary checks, serving as a mechanical guardrail.
 5. Phase skills, reviewers, and the main agent are responsible for semantic validation such as plan consistency, issue decomposition quality, validation strategy, and execution judgment; reviewer gates for each issue in the `Execution` phase are governed by `cadence-execution`'s rules.
 
@@ -60,7 +60,7 @@ This file is the shared lifecycle constraints for `Cadence`. `using-cadence` and
 ### Planning
 
 - Phase: `cadence-planning`
-- Goal: Draft and confirm `plan/*.md`
+- Goal: Draft and confirm `.cadence/plan/*.md`
 - Minimum prerequisite: A identifiable current task exists
 - Phase completion: In the current flow, the user explicitly confirms continuing to `cadence-issue-generation` based on the current plan file
 - Default follow-up: After receiving confirmation in the current flow, automatically transition to `cadence-issue-generation`
@@ -69,7 +69,7 @@ This file is the shared lifecycle constraints for `Cadence`. `using-cadence` and
 
 - Phase: `cadence-issue-generation`
 - Goal: Generate issue files for the current task based on plan files
-- Minimum prerequisite: A `plan/*.md` matching the current task exists, or one explicitly specified by the user
+- Minimum prerequisite: A `.cadence/plan/*.md` matching the current task exists, or one explicitly specified by the user
 - Phase completion: In the current flow, the user explicitly confirms continuing to `cadence-execution` based on the current issue file
 - Default follow-up: After receiving confirmation in the current flow, automatically transition to `cadence-execution`
 
@@ -92,7 +92,7 @@ This file is the shared lifecycle constraints for `Cadence`. `using-cadence` and
 
 ## Confirmation Point Semantics
 
-1. `Planning`'s confirmation point is "plan file has been written to `plan/*.md` and completed `plan-reviewer` review, waiting for user to reply confirm to enter `cadence-issue-generation`"; before receiving explicit confirmation, do not enter the downstream phase.
+1. `Planning`'s confirmation point is "plan file has been written to `.cadence/plan/*.md` and completed `plan-reviewer` review, waiting for user to reply confirm to enter `cadence-issue-generation`"; before receiving explicit confirmation, do not enter the downstream phase.
 2. `Issue Generation`'s confirmation point is "issue file has been written and completed `issue-reviewer` review, waiting for user to continue adjusting, adopt, or confirm entering `cadence-execution`"; before receiving explicit confirmation, do not enter the downstream phase.
 3. While at the `Issue Generation` confirmation point, if the user continues to provide supplementary, deletion, reordering, or clarification feedback on the current issue file, continue handling that file within the current `Issue Generation` phase.
 4. While at a confirmation point, it is still considered active `Cadence` within the current flow; as long as the user subsequently gives a clear confirmation matching the current confirmation point, the current downstream phase should continue advancing.

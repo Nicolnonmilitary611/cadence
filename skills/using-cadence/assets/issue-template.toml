@@ -3,11 +3,11 @@
 # - Lifecycle, confirmation points, handoff, and terminal states are governed by `references/cadence-lifecycle.md`.
 # - `cadence_validate.py` provides mechanical guardrails: basic structure and execution-stage writeback boundary validation; semantic validation is the responsibility of phase skills, reviewers, and the main agent.
 # - When writing actual issue files, replace all placeholder values; do not retain empty strings or placeholder text.
-# - One plan file corresponds to one issue file, with a path like `issues/YYYY-MM-DD-feature-name.toml`.
+# - One plan file corresponds to one issue file, with a path like `.cadence/issue/YYYY-MM-DD-feature-name.toml`.
 # - The file must be directly parseable as valid TOML.
 
 # Relative path to the corresponding plan file. Required and non-empty.
-plan = "plan/YYYY-MM-DD-feature-name.md"
+plan = ".cadence/plan/YYYY-MM-DD-feature-name.md"
 
 # Each `[[issue]]` block represents an independently deliverable, independently verifiable, independently writable outcome unit.
 # Add more `[[issue]]` blocks as needed; default execution order is determined by `sequence`, and file ordering is for reading display only.

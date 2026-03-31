@@ -1,4 +1,4 @@
 interface:
   display_name: "Cadence Planning"
   short_description: "Cadence planning phase: draft and review plan files, then advance to the next phase after confirmation"
-  default_prompt: "Use cadence-planning to enter Cadence from the Planning phase, draft and revise plan/*.md based on confirmed facts, complete review, wait for confirmation, then advance to issue generation."
+  default_prompt: "Use cadence-planning to enter Cadence from the Planning phase, draft and revise .cadence/plan/*.md based on confirmed facts, complete review, wait for confirmation, then advance to issue generation."

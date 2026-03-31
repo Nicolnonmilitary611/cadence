@@ -1,4 +1,4 @@
 interface:
   display_name: "Cadence Issue Generation"
   short_description: "Cadence issue phase: draft and review issue files, then advance to the next phase after confirmation"
-  default_prompt: "Use cadence-issue-generation to enter Cadence from the Issue Generation phase, draft and revise issues/*.toml, complete review, wait for confirmation, then advance to execution."
+  default_prompt: "Use cadence-issue-generation to enter Cadence from the Issue Generation phase, draft and revise .cadence/issue/*.toml, complete review, wait for confirmation, then advance to execution."

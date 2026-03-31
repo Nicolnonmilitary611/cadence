@@ -26,7 +26,7 @@ Within `Cadence`, advance implementation, validation, and status writeback based
 
 ## Quick Flow
 
-1. Prerequisite check: Read the issue file specified by the user or corresponding to the current task; if there are multiple candidates or the target cannot be safely determined, ask the user to specify first. Read the matching `plan/*.md` if needed.
+1. Prerequisite check: Read the issue file specified by the user or corresponding to the current task; if there are multiple candidates or the target cannot be safely determined, ask the user to specify first. Read the matching `.cadence/plan/*.md` if needed.
 2. Select frontier: Choose the currently executable issues to advance this round based on "Status Advancement and Execution Order" below.
 3. Dispatch strategy: Determine the execution method for each selected issue (implementer subagent or main agent execution) and the scheduling method between multiple frontier issues (sequential or parallel) based on "Subagent Dispatch" below.
 4. Execution loop: For selected issues, perform implementation, required reviewer reviews (first `spec-reviewer`, then `code-reviewer`), final validation, regression, and status writeback.
@@ -243,7 +243,7 @@ SUGGESTED_NEXT_STEP:
 
 ### File and Modification Boundaries
 
-- Issue file paths are of the form `issues/YYYY-MM-DD-<feature-name>.toml`; field structure, status values, and sentinel values are governed by `../using-cadence/assets/issue-template.toml`.
+- Issue file paths are of the form `.cadence/issue/YYYY-MM-DD-<feature-name>.toml`; field structure, status values, and sentinel values are governed by `../using-cadence/assets/issue-template.toml`.
 - The execution phase only allows updating `status`, `validate_status`, `regress_status`, and `notes`; whether reviewer gates have passed belongs to execution semantics and is not expressed through new issue fields.
 - During execution, if status fields or `notes` need to reflect actual work, the current issue file must be immediately written back; if reviewer gates cannot be completed due to tool or environment reasons, the reason and user decision should also be recorded in `notes`.
 - After each writeback, the file must be re-read and the following items directly verified:

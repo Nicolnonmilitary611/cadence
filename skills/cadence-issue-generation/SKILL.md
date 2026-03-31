@@ -26,9 +26,9 @@ Within `Cadence`, convert plan files into reviewed issue files.
 
 ## Quick Flow
 
-1. Prerequisite check: Determine and read the `plan/*.md` to be processed this time, and complete a current session `available capabilities` adaptation check per the shared lifecycle; if the user has explicitly specified a plan file, use that file first; if there are multiple candidates or the target cannot be safely determined, ask the user to specify first. If the corresponding issue file already exists, read it as well.
+1. Prerequisite check: Determine and read the `.cadence/plan/*.md` to be processed this time, and complete a current session `available capabilities` adaptation check per the shared lifecycle; if the user has explicitly specified a plan file, use that file first; if there are multiple candidates or the target cannot be safely determined, ask the user to specify first. If the corresponding issue file already exists, read it as well.
 2. Issue decomposition: Generate or adjust issue entries per "Issue Decomposition Rules" and "Testing and Validation Fields" below.
-3. Write draft: Per "Writing" below, first write the issue draft directly to `issues/YYYY-MM-DD-<feature-name>.toml`, and perform basic structural validation on the current file; before `issue-reviewer` passes, the current content at that path is only treated as the current phase draft, not as a confirmed issue input.
+3. Write draft: Per "Writing" below, first write the issue draft directly to `.cadence/issue/YYYY-MM-DD-<feature-name>.toml`, and perform basic structural validation on the current file; before `issue-reviewer` passes, the current content at that path is only treated as the current phase draft, not as a confirmed issue input.
 4. Reviewer review: Dispatch the `issue-reviewer` subagent to directly review the current issue draft; if review does not pass, the main agent modifies the same issue file per `issue-reviewer` rules below, re-reviews, or clarifies with the user.
 5. Final self-check: After review passes, the main agent reads back the current issue file to complete the final structural self-check.
 6. Confirmation point: After the current issue file passes review and completes self-check, present the issue file path, key change summary, key issue items, and review results to the user, and explicitly ask: `Reply confirm to enter cadence-execution.`
@@ -37,13 +37,13 @@ Within `Cadence`, convert plan files into reviewed issue files.
 
 ## issue-reviewer
 
-- `issue-reviewer` executes after the current issue draft is written to the target `issues/*.toml`, responsible for reviewing the current issue draft per the review rules below, and checking whether the target path and current file content match.
+- `issue-reviewer` executes after the current issue draft is written to the target `.cadence/issue/*.toml`, responsible for reviewing the current issue draft per the review rules below, and checking whether the target path and current file content match.
 - `issue-reviewer` uniformly handles content review, structural checks, target path checks, and issue file content validation for the Issue Generation phase; do not additionally split other reviewer processes, and do not add duplicate self-check chains in parallel.
 - `issue-reviewer` is read-only by default; it does not directly write to issue files, nor does it confirm entering `Execution` on behalf of the main agent.
 - The main agent provides `issue-reviewer` with minimum necessary context: current plan file path, current plan full text or key sections, issue target path, current issue file full text, structural requirements from `../using-cadence/assets/issue-template.toml`, and the review rules below.
 - `issue-reviewer` does not read back through the entire conversation history; it only performs independent review based on context provided by the main agent, the plan file, and the current issue file.
 - `issue-reviewer` also follows the shared lifecycle's current session `available capabilities` gate before reviewing; if the conclusion is `none-applicable`, the reason must be explicitly stated in the output.
-- `issue-reviewer` is also responsible for target path checks and issue file content validation, including: the issue target path has been properly placed at `issues/YYYY-MM-DD-<feature-name>.toml`, the current issue file can be directly parsed as `TOML`, content is consistent with template structure, current issue content is consistent with the task corresponding to the target path, `sequence` is a unique positive integer, no placeholder residue, no obvious format corruption, and `regress_by` / `regress_timing` / `regress_status` linkage is correct.
+- `issue-reviewer` is also responsible for target path checks and issue file content validation, including: the issue target path has been properly placed at `.cadence/issue/YYYY-MM-DD-<feature-name>.toml`, the current issue file can be directly parsed as `TOML`, content is consistent with template structure, current issue content is consistent with the task corresponding to the target path, `sequence` is a unique positive integer, no placeholder residue, no obvious format corruption, and `regress_by` / `regress_timing` / `regress_status` linkage is correct.
 - Each blocking issue in `FINDINGS` must have a label: `[auto_fixable]` means the main agent can fix it directly without introducing unconfirmed information, changing key scope, or making key decomposition or key validation strategy decisions on behalf of the user; `[needs_user_decision]` means the user must be consulted first.
 - If `issue-reviewer` raises issues, the main agent by default only auto-revises the current issue file based on `[auto_fixable]` `FINDINGS`, then re-initiates the same type of review; auto-revision executes at most 3 rounds.
 - If any `[needs_user_decision]` issue appears, or the auto-revision limit is reached without passing, the main agent must stop auto-revision and clarify with the user.
@@ -71,13 +71,13 @@ Can be assembled directly from the following skeleton:
 You are the issue-reviewer subagent for the current Cadence Issue Generation.
 
 Plan file path:
-- <plan/...>
+- <.cadence/plan/...>
 
 Plan content:
 <current plan full text, or explicit instruction to read the plan file directly>
 
 Issue target path:
-- <issues/...>
+- <.cadence/issue/...>
 
 Issue file content:
 <current issue file full text, or explicit instruction to read the target issue file directly>
@@ -94,7 +94,7 @@ Review requirements:
 - Each blocking issue must be labeled as `[auto_fixable]` or `[needs_user_decision]`
 
 Check focus:
-- Whether the issue target path has correctly landed at `issues/YYYY-MM-DD-<feature-name>.toml`, and whether naming conforms to conventions
+- Whether the issue target path has correctly landed at `.cadence/issue/YYYY-MM-DD-<feature-name>.toml`, and whether naming conforms to conventions
 - Whether the current issue file can be directly parsed as `TOML`
 - Whether current issue content is consistent with the task corresponding to the target path
 - Whether top-level fields, `[[issue]]` blocks, and required fields exist and are non-empty
@@ -177,7 +177,7 @@ SUGGESTED_NEXT_STEP:
 
 ## Writing
 
-- Issue file path is derived from the plan file name as `issues/YYYY-MM-DD-<feature-name>.toml`.
+- Issue file path is derived from the plan file name as `.cadence/issue/YYYY-MM-DD-<feature-name>.toml`.
 - When first writing or revising an existing issue contract, first generate or rewrite the issue file based on `../using-cadence/assets/issue-template.toml`, replacing all placeholder values in it.
 - Issue files must directly follow the field structure, status values, sentinel values, and annotation examples in `../using-cadence/assets/issue-template.toml`.
 - When writing the actual issue file, all template placeholder values must be replaced with real task content.

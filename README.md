@@ -72,7 +72,7 @@ In the execution phase, each issue is dispatched to an `implementer` subagent wi
 │  ┌──────────────┐    ┌──────────────────┐    ┌──────────────┐   │
 │  │  Planning    │───→│ Issue Generation │───→│  Execution   │   │
 │  │              │    │                  │    │              │   │
-│  │  plan/*.md   │    │  issues/*.toml   │    │  code +      │   │
+│  │  plan/*.md   │    │  issue/*.toml   │    │  code +      │   │
 │  │              │    │                  │    │  validation  │   │
 │  │ plan-reviewer│    │ issue-reviewer   │    │ spec-reviewer│   │
 │  │              │    │                  │    │ code-reviewer│   │
@@ -88,7 +88,7 @@ In the execution phase, each issue is dispatched to an `implementer` subagent wi
 Transform task requirements into structured plan files.
 
 1. Read repository context, clarify key information gaps
-2. Draft `plan/YYYY-MM-DD-<feature-name>.md` based on template
+2. Draft `.cadence/plan/YYYY-MM-DD-<feature-name>.md` based on template
 3. `plan-reviewer` subagent independently reviews: completeness, consistency, executability
 4. Auto-fix fixable issues, or clarify with user for decisions needed
 5. After user confirms, automatically handoff to Issue Generation
@@ -99,7 +99,7 @@ Transform task requirements into structured plan files.
 
 Decompose the plan into independently executable, verifiable, and writable outcome units.
 
-1. Read plan file, generate `issues/YYYY-MM-DD-<feature-name>.toml` following decomposition rules
+1. Read plan file, generate `.cadence/issue/YYYY-MM-DD-<feature-name>.toml` following decomposition rules
 2. `issue-reviewer` subagent reviews: TOML structure, decomposition granularity, dependencies, validation strategy
 3. Auto-fix structural issues
 4. After user confirms, automatically handoff to Execution
@@ -142,7 +142,7 @@ Cadence's harness is not a single layer, but a layered design from structure to 
 ├───────────────────────────────────────────────┤
 │  Environment Layer (file system + skill       │
 │  format)                                      │
-│  plan/*.md, issues/*.toml, SKILL.md,          │
+│  plan/*.md, issue/*.toml, SKILL.md,          │
 │  templates                                    │
 └───────────────────────────────────────────────┘
 ```
