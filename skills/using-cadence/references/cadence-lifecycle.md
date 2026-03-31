@@ -16,8 +16,8 @@ This file is the shared lifecycle constraints for `Cadence`. `using-cadence` and
 ## Shared Source of Truth
 
 1. Lifecycle, phase prerequisites, confirmation points, default handoff, and terminal states are governed by this file.
-2. `plan/*.md` structural requirements are governed by `../cadence-planning/assets/plan-template.md`; `cadence-planning` supplements the planning phase process and reviewer rules.
-3. `issues/*.toml` field structure, default values, and annotation examples are governed by `assets/issue-template.toml`; `cadence-issue-generation` and `cadence-execution` supplement each phase's generation, review, writeback, and advancement rules.
+2. `plan/*.md` structural requirements are governed by `../../cadence-planning/assets/plan-template.md`; `cadence-planning` supplements the planning phase process and reviewer rules.
+3. `issues/*.toml` field structure, default values, and annotation examples are governed by `../assets/issue-template.toml`; `cadence-issue-generation` and `cadence-execution` supplement each phase's generation, review, writeback, and advancement rules.
 4. `scripts/cadence_validate.py` provides basic structure and execution-stage writeback boundary checks, serving as a mechanical guardrail.
 5. Phase skills, reviewers, and the main agent are responsible for semantic validation such as plan consistency, issue decomposition quality, validation strategy, and execution judgment; reviewer gates for each issue in the `Execution` phase are governed by `cadence-execution`'s rules.
 
